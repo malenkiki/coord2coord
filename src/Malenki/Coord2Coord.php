@@ -30,7 +30,7 @@ class Coord2Coord
     protected $size;
     protected $fromZero = false;
 
-    public function __construct()
+    public function __construct($fromZero = false)
     {
         $this->arr = range('a', 'z');
         $this->size = count($this->arr);
@@ -42,6 +42,7 @@ class Coord2Coord
         }
 
         $this->arr = $prov;
+        $this->fromZero = $fromZero;
     }
 
 

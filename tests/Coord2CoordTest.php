@@ -61,6 +61,14 @@ class Coord2CoordTest extends PHPUnit_Framework_TestCase
         $this->assertEquals(26, $c2c->l2d('Z'));
     }
 
+    public function testConvertingFromSingleUppercaseLetterStartingFromZeroShouldSuccess()
+    {
+        $c2c = new Coord2Coord(true);
+
+        $this->assertEquals(0, $c2c->l2d('A'));
+        $this->assertEquals(25, $c2c->l2d('Z'));
+    }
+
 
     public function testConvertingFromSingleLowercaseLetterShouldSuccess()
     {
@@ -69,6 +77,15 @@ class Coord2CoordTest extends PHPUnit_Framework_TestCase
         $this->assertEquals(2, $c2c->l2d('b'));
         $this->assertEquals(25, $c2c->l2d('y'));
     }
+
+    public function testConvertingFromSingleLowercaseLetterStartingFromZeroShouldSuccess()
+    {
+        $c2c = new Coord2Coord(true);
+
+        $this->assertEquals(1, $c2c->l2d('b'));
+        $this->assertEquals(24, $c2c->l2d('y'));
+    }
+
 
     public function testConvertingFromSeveralUppercaseLettersShouldSuccess()
     {
@@ -80,6 +97,43 @@ class Coord2CoordTest extends PHPUnit_Framework_TestCase
         $this->assertEquals(60, $c2c->l2d('BH'));
         $this->assertEquals(820, $c2c->l2d('AEN'));
     }
+
+    public function testConvertingFromSeveralLowercaseLettersShouldSuccess()
+    {
+        $c2c = new Coord2Coord();
+
+        $this->assertEquals(28, $c2c->l2d('ab'));
+        $this->assertEquals(31, $c2c->l2d('ae'));
+        $this->assertEquals(37, $c2c->l2d('ak'));
+        $this->assertEquals(60, $c2c->l2d('bh'));
+        $this->assertEquals(820, $c2c->l2d('aen'));
+    }
+
+
+    public function testConvertingFromSeveralUppercaseLettersStartingFromZeroShouldSuccess()
+    {
+        $c2c = new Coord2Coord(true);
+
+        $this->assertEquals(27, $c2c->l2d('AB'));
+        $this->assertEquals(30, $c2c->l2d('AE'));
+        $this->assertEquals(36, $c2c->l2d('AK'));
+        $this->assertEquals(59, $c2c->l2d('BH'));
+        $this->assertEquals(819, $c2c->l2d('AEN'));
+    }
+
+
+    public function testConvertingFromSeveralLowercaseLettersStartingFromZeroShouldSuccess()
+    {
+        $c2c = new Coord2Coord(true);
+
+        $this->assertEquals(27, $c2c->l2d('ab'));
+        $this->assertEquals(30, $c2c->l2d('ae'));
+        $this->assertEquals(36, $c2c->l2d('ak'));
+        $this->assertEquals(59, $c2c->l2d('bh'));
+        $this->assertEquals(819, $c2c->l2d('aen'));
+    }
+
+
 
 
     public function testConvertingFronIntegerShouldReturnString()
@@ -110,11 +164,29 @@ class Coord2CoordTest extends PHPUnit_Framework_TestCase
     }
 
 
+    /**
+     * @expectedException \InvalidArgumentException
+     */
+    public function testConvertingUsingStartToOneZeroShouldFail()
+    {
+        $c2c = new Coord2Coord(true);
+        $c2c->d2l(0);
+    }
+
+
     public function testConvertingFromIntegerShouldSuccess()
     {
         $c2c = new Coord2Coord();
 
         $this->assertEquals('BH', $c2c->d2l(60));
         $this->assertEquals('AEN', $c2c->d2l(820));
+    }
+
+    public function testConvertingFromIntegerStartingToZeroShouldSuccess()
+    {
+        $c2c = new Coord2Coord(true);
+
+        $this->assertEquals('BG', $c2c->d2l(60));
+        $this->assertEquals('AEM', $c2c->d2l(820));
     }
 }
