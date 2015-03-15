@@ -155,7 +155,7 @@ class Coord2CoordTest extends PHPUnit_Framework_TestCase
 
 
     /**
-     * @expectedException \InvalidArgumentException
+     * @expectedException \OutOfRangeException
      */
     public function testConvertingFromNonPositiveIntegerShouldFail()
     {
@@ -165,11 +165,11 @@ class Coord2CoordTest extends PHPUnit_Framework_TestCase
 
 
     /**
-     * @expectedException \InvalidArgumentException
+     * @expectedException \OutOfRangeException
      */
     public function testConvertingUsingStartToOneZeroShouldFail()
     {
-        $c2c = new Coord2Coord(true);
+        $c2c = new Coord2Coord();
         $c2c->d2l(0);
     }
 
