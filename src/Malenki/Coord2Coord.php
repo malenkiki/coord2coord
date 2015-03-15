@@ -208,24 +208,6 @@ class Coord2Coord
                 $out++;
             }
         }
-        //$out = '';
-
-        /*
-        if($this->fromZero){
-            $int++;
-        }
-        while(true){
-            $q = $int / $this->size;
-            $r = $int % $this->size;
-
-            $out = $this->arr[$r] . $out;
-
-            $int = $q;
-            if(!isset($this->arr[$r])) break;
-
-        }
-         */
-
 
         return strtoupper($out);
     }
