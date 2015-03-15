@@ -178,6 +178,9 @@ class Coord2CoordTest extends PHPUnit_Framework_TestCase
     {
         $c2c = new Coord2Coord();
 
+        $this->assertEquals('A', $c2c->d2l(1));
+        $this->assertEquals('Z', $c2c->d2l(26));
+        $this->assertEquals('AA', $c2c->d2l(27));
         $this->assertEquals('BH', $c2c->d2l(60));
         $this->assertEquals('AEN', $c2c->d2l(820));
     }
@@ -186,7 +189,10 @@ class Coord2CoordTest extends PHPUnit_Framework_TestCase
     {
         $c2c = new Coord2Coord(true);
 
-        $this->assertEquals('BG', $c2c->d2l(60));
-        $this->assertEquals('AEM', $c2c->d2l(820));
+        $this->assertEquals('A', $c2c->d2l(0));
+        $this->assertEquals('Z', $c2c->d2l(25));
+        $this->assertEquals('AA', $c2c->d2l(26));
+        $this->assertEquals('BI', $c2c->d2l(60));
+        $this->assertEquals('AEO', $c2c->d2l(820));
     }
 }

@@ -199,22 +199,33 @@ class Coord2Coord
             );
         }
 
-        $out = '';
+        $range = range($this->fromZero ? 0 : 1, $int);
 
-        if($this->fromZero){
-            $int--;
+        foreach($range as $a){
+            if(!isset($out)){
+                $out = 'a';
+            } else {
+                $out++;
+            }
         }
+        //$out = '';
 
+        /*
+        if($this->fromZero){
+            $int++;
+        }
         while(true){
             $q = $int / $this->size;
             $r = $int % $this->size;
 
-            if(!isset($this->arr[$r])) break;
             $out = $this->arr[$r] . $out;
 
             $int = $q;
+            if(!isset($this->arr[$r])) break;
 
         }
+         */
+
 
         return strtoupper($out);
     }
