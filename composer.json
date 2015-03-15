@@ -13,8 +13,10 @@
         }
     ],
     "require": {
-        "php": ">=5.3.0"
+        "php": ">=5.3.0",
+        "malenki/argile": ">=3.0"
     },
+    "bin": ["bin/coord2coord"],
     "autoload": {
         "psr-0": {
             "Malenki": "src/"

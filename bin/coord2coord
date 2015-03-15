@@ -1,0 +1,90 @@
+#!/usr/bin/env php
+<?php
+/*
+Copyright (c) 2014 Michel Petit <petit.michel@gmail.com>
+
+Permission is hereby granted, free of charge, to any person obtaining
+a copy of this software and associated documentation files (the
+"Software"), to deal in the Software without restriction, including
+without limitation the rights to use, copy, modify, merge, publish,
+distribute, sublicense, and/or sell copies of the Software, and to
+permit persons to whom the Software is furnished to do so, subject to
+the following conditions:
+
+The above copyright notice and this permission notice shall be
+included in all copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
+EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
+MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
+NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE
+LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION
+OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
+WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+ */
+
+
+namespace Malenki;
+
+(@include_once __DIR__ . '/../vendor/autoload.php') || @include_once __DIR__ . '/../../../autoload.php';
+
+if(phpversion() >= '5.5.0')
+{
+    cli_set_process_title('coord2coord');
+}
+
+$opt = \Malenki\Argile\Options::getInstance();
+$opt->addUsage("COORD [COORD2 [COORD3…]]");
+$opt->addUsage("--zero COORD [COORD2 [COORD3…]]");
+$opt->addUsage("-z COORD [COORD2 [COORD3…]]");
+$opt->description('Convert spreadsheet coordinate to numeric coordinates and vice versa');
+$opt->version(
+    'Coord2Coord CLI version 1.0'.
+    "\n".
+    "\n".
+    "\n".
+'Copyright (c) 2015 Michel Petit <petit.michel@gmail.com>'.
+"\n".
+    "\n".
+'Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:'.
+"\n".
+    "\n".
+'The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.'.
+"\n".
+    "\n".
+'THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.'
+);
+
+$opt->flexible();
+
+$opt->newSwitch('zero')
+    ->short('z')
+    ->long('zero')
+    ->help('Set the origin to zero. By default, if not given, one is used as origin.')
+    ;
+
+$opt->parse(false);
+
+if(!$opt->hasArgument())
+{
+    fwrite(STDERR, 'You must give at least column coordinate to convert!');
+    fwrite(STDERR, PHP_EOL);
+    exit(1);
+}
+
+$c2c = new \Malenki\Coord2Coord($opt->has('zero'));
+
+foreach($opt->getArguments() as $a){
+    try {
+        // take minus sign to have good error message…
+        if(preg_match('/^[0-9]+$/', $a)){
+            printf('"%d" => %s', (int) $a, $c2c->d2l((int) $a));
+        } else {
+            printf('"%s" => %d', $a, $c2c->l2d($a));
+        }
+        printf(PHP_EOL);
+    } catch(\Exception $e){
+        fwrite(STDERR, sprintf('"%s" => %s', $a, $e->getMessage()));
+        fwrite(STDERR, PHP_EOL);
+    }
+}
