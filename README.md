@@ -69,7 +69,7 @@ Again, install it using composer, then, `composer install` into root directory o
 
 A script is available into `bin\coord2coord`.
 
-Other way is to use PHAR file, so, just download it or create it using [box](https://github.com/box-project/box2) by doing `box build` into the root of sources.
+Other way is to use PHAR file, so, just [download it](http://malenkiki.github.io/coord2coord/coord2coord.phar) or create it using [box](https://github.com/box-project/box2) by doing `box build` into the root of sources.
 
 Play with it is very simple:
 
