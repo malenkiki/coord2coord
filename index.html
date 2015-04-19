@@ -1,0 +1,135 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <title>Coord2coord by malenkiki</title>
+
+    <link rel="stylesheet" href="stylesheets/styles.css">
+    <link rel="stylesheet" href="stylesheets/pygment_trac.css">
+    <script src="javascripts/scale.fix.js"></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <!--[if lt IE 9]>
+    <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+  </head>
+  <body>
+    <div class="wrapper">
+      <header>
+        <h1 class="header">Coord2coord</h1>
+        <p class="header">Convert spreadsheet columns coordinates to numeric coordinates and reverse too</p>
+
+        <ul>
+          <li class="download"><a class="buttons" href="https://github.com/malenkiki/coord2coord/zipball/master">Download ZIP</a></li>
+          <li class="download"><a class="buttons" href="https://github.com/malenkiki/coord2coord/tarball/master">Download TAR</a></li>
+          <li><a class="buttons github" href="https://github.com/malenkiki/coord2coord">View On GitHub</a></li>
+        </ul>
+
+        <p class="header">This project is maintained by <a class="header name" href="https://github.com/malenkiki">malenkiki</a></p>
+
+
+      </header>
+      <section>
+        <h1>
+<a id="coord2coord" class="anchor" href="#coord2coord" aria-hidden="true"><span class="octicon octicon-link"></span></a>coord2coord</h1>
+
+<p>Convert spreadsheet columns coordinates to numeric coordinates and reverse too</p>
+
+<h2>
+<a id="why" class="anchor" href="#why" aria-hidden="true"><span class="octicon octicon-link"></span></a>Why?</h2>
+
+<p>Sometimes, when you develop some code about some CSV or something like that, you have reference given by some people using spreadsheet value (column A, AA, Z…) or index value (1, 2, 3) or even index value starting to zero (0, 1, 2…).</p>
+
+<p>So, this little library deals with that. So, you can easily switch from one system to another.</p>
+
+<h2>
+<a id="how" class="anchor" href="#how" aria-hidden="true"><span class="octicon octicon-link"></span></a>How?</h2>
+
+<p>You can play with it using two ways:</p>
+
+<ul>
+<li>By using library to use it into your code</li>
+<li>By using CLI script available.</li>
+</ul>
+
+<h2>
+<a id="using-the-library" class="anchor" href="#using-the-library" aria-hidden="true"><span class="octicon octicon-link"></span></a>Using the library</h2>
+
+<p>Very simple, install it using <em>composer</em>. You can find it on <a href="https://packagist.org/packages/malenki/coord2coord">https://packagist.org/packages/malenki/coord2coord</a>.</p>
+
+<p>Quick example converting spreadsheet column name to index starting from one:</p>
+
+<div class="highlight highlight-php"><pre><span class="pl-s1"><span class="pl-k">use</span> <span class="pl-c1">\Malenki\Coord2Coord</span>;</span>
+<span class="pl-s1"></span>
+<span class="pl-s1"><span class="pl-smi">$c2c</span> <span class="pl-k">=</span> <span class="pl-k">new</span> <span class="pl-c1">Coord2Coord</span>();</span>
+<span class="pl-s1"><span class="pl-c1">echo</span> <span class="pl-smi">$c2c</span><span class="pl-k">-&gt;</span>l2d(<span class="pl-s"><span class="pl-pds">'</span>A<span class="pl-pds">'</span></span>); <span class="pl-c">// 1</span></span>
+<span class="pl-s1"><span class="pl-c1">echo</span> <span class="pl-smi">$c2c</span><span class="pl-k">-&gt;</span>l2d(<span class="pl-s"><span class="pl-pds">'</span>Z<span class="pl-pds">'</span></span>); <span class="pl-c">// 26</span></span>
+<span class="pl-s1"><span class="pl-c1">echo</span> <span class="pl-smi">$c2c</span><span class="pl-k">-&gt;</span>l2d(<span class="pl-s"><span class="pl-pds">'</span>AA<span class="pl-pds">'</span></span>); <span class="pl-c">// 27</span></span></pre></div>
+
+<p>Now the same with index starting from zero (note the constructor's call):</p>
+
+<div class="highlight highlight-php"><pre><span class="pl-s1"><span class="pl-k">use</span> <span class="pl-c1">\Malenki\Coord2Coord</span>;</span>
+<span class="pl-s1"></span>
+<span class="pl-s1"><span class="pl-smi">$c2c</span> <span class="pl-k">=</span> <span class="pl-k">new</span> <span class="pl-c1">Coord2Coord</span>(<span class="pl-c1">true</span>);</span>
+<span class="pl-s1"><span class="pl-c1">echo</span> <span class="pl-smi">$c2c</span><span class="pl-k">-&gt;</span>l2d(<span class="pl-s"><span class="pl-pds">'</span>A<span class="pl-pds">'</span></span>); <span class="pl-c">// 0</span></span>
+<span class="pl-s1"><span class="pl-c1">echo</span> <span class="pl-smi">$c2c</span><span class="pl-k">-&gt;</span>l2d(<span class="pl-s"><span class="pl-pds">'</span>Z<span class="pl-pds">'</span></span>); <span class="pl-c">// 25</span></span>
+<span class="pl-s1"><span class="pl-c1">echo</span> <span class="pl-smi">$c2c</span><span class="pl-k">-&gt;</span>l2d(<span class="pl-s"><span class="pl-pds">'</span>AA<span class="pl-pds">'</span></span>); <span class="pl-c">// 26</span></span></pre></div>
+
+<p>Example to show how to convert index to spreadsheet column name:</p>
+
+<div class="highlight highlight-php"><pre><span class="pl-s1"><span class="pl-k">use</span> <span class="pl-c1">\Malenki\Coord2Coord</span>;</span>
+<span class="pl-s1"></span>
+<span class="pl-s1"><span class="pl-smi">$c2c</span> <span class="pl-k">=</span> <span class="pl-k">new</span> <span class="pl-c1">Coord2Coord</span>();</span>
+<span class="pl-s1"><span class="pl-c1">echo</span> <span class="pl-smi">$c2c</span><span class="pl-k">-&gt;</span>d2l(<span class="pl-c1">1</span>); <span class="pl-c">// 'A'</span></span>
+<span class="pl-s1"><span class="pl-c1">echo</span> <span class="pl-smi">$c2c</span><span class="pl-k">-&gt;</span>d2l(<span class="pl-c1">26</span>); <span class="pl-c">// 'Z'</span></span>
+<span class="pl-s1"><span class="pl-c1">echo</span> <span class="pl-smi">$c2c</span><span class="pl-k">-&gt;</span>d2l(<span class="pl-c1">27</span>); <span class="pl-c">// 'AA'</span></span></pre></div>
+
+<p>Again, we can also use starting point as zero:</p>
+
+<div class="highlight highlight-php"><pre><span class="pl-s1"><span class="pl-k">use</span> <span class="pl-c1">\Malenki\Coord2Coord</span>;</span>
+<span class="pl-s1"></span>
+<span class="pl-s1"><span class="pl-smi">$c2c</span> <span class="pl-k">=</span> <span class="pl-k">new</span> <span class="pl-c1">Coord2Coord</span>(<span class="pl-c1">true</span>);</span>
+<span class="pl-s1"><span class="pl-c1">echo</span> <span class="pl-smi">$c2c</span><span class="pl-k">-&gt;</span>d2l(<span class="pl-c1">0</span>); <span class="pl-c">// 'A'</span></span>
+<span class="pl-s1"><span class="pl-c1">echo</span> <span class="pl-smi">$c2c</span><span class="pl-k">-&gt;</span>d2l(<span class="pl-c1">25</span>); <span class="pl-c">// 'Z'</span></span>
+<span class="pl-s1"><span class="pl-c1">echo</span> <span class="pl-smi">$c2c</span><span class="pl-k">-&gt;</span>d2l(<span class="pl-c1">26</span>); <span class="pl-c">// 'AA'</span></span></pre></div>
+
+<p>That's all to know!</p>
+
+<p>But you must also know that if you use incorrect value for index (negative integer, non integer, or zero when starting point is one) then this raises an exception (<code>InvalidArgumentException</code> is it is not an integer or <code>OutOfRangeException</code> for other cases).</p>
+
+<p>Also, if you use any other value than ASCII characters <code>a-zA-Z</code> for convert spreadsheet column name to index then an <code>InvalidArgumentException</code> occurs.</p>
+
+<h2>
+<a id="using-cli-script" class="anchor" href="#using-cli-script" aria-hidden="true"><span class="octicon octicon-link"></span></a>Using CLI script</h2>
+
+<p>Again, install it using composer.</p>
+
+<p>A script is available into <code>bin\coord2coord</code>.</p>
+
+<p>Play with it is very simple:</p>
+
+<pre><code>bin\coord2coord --help #display help message
+bin\coord2coord A Z AA 56 2
+"A" =&gt; 1
+"Z" =&gt; 26
+"AA" =&gt; 27
+"56" =&gt; BD
+"2" =&gt; B
+ bin/coord2coord --zero A Z AA 56 2
+"A" =&gt; 0
+"Z" =&gt; 25
+"AA" =&gt; 26
+"56" =&gt; BE
+"2" =&gt; C
+</code></pre>
+
+<p>Simple, isn't it?</p>
+      </section>
+      <footer>
+        <p><small>Hosted on <a href="https://pages.github.com">GitHub Pages</a> using the Dinky theme</small></p>
+      </footer>
+    </div>
+    <!--[if !IE]><script>fixScale(document);</script><![endif]-->
+		
+  </body>
+</html>
