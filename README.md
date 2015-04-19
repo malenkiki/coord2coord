@@ -65,9 +65,11 @@ But you must also know that if you use incorrect value for index (negative integ
 Also, if you use any other value than ASCII characters `a-zA-Z` for convert spreadsheet column name to index then an `InvalidArgumentException` occurs.
 
 ## Using CLI script
-Again, install it using composer.
+Again, install it using composer, then, `composer install` into root directory of sources.
 
 A script is available into `bin\coord2coord`.
+
+Other way is to use PHAR file, so, just download it or create it using [box](https://github.com/box-project/box2) by doing `box build` into the root of sources.
 
 Play with it is very simple:
 
