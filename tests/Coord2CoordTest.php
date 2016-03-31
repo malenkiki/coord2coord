@@ -195,4 +195,120 @@ class Coord2CoordTest extends PHPUnit_Framework_TestCase
         $this->assertEquals('BI', $c2c->d2l(60));
         $this->assertEquals('AEO', $c2c->d2l(820));
     }
+
+
+
+
+    /**
+     * @expectedException \InvalidArgumentException
+     */
+    public function testMagicConvertingUsingFloatShouldRaiseInvalidArgumentException()
+    {
+        $c2c = new Coord2Coord();
+        $c2c->magic(M_PI);
+    }
+
+
+    /**
+     * @expectedException \InvalidArgumentException
+     */
+    public function testMagicConvertingUsingNegativeShouldRaiseInvalidArgumentException()
+    {
+        $c2c = new Coord2Coord();
+        $c2c->magic(-42);
+    }
+
+
+    /**
+     * @expectedException \InvalidArgumentException
+     */
+    public function testMagicConvertingUsingNonAsciiShouldRaiseInvalidArgumentException()
+    {
+        $c2c = new Coord2Coord();
+        $c2c->magic('ßA');
+    }
+
+    /**
+     * @expectedException \InvalidArgumentException
+     */
+    public function testMagicConvertingUsingMixedLettersDigitsShouldRaiseInvalidArgumentException()
+    {
+        $c2c = new Coord2Coord();
+        $c2c->magic('AB34R');
+    }
+
+    /**
+     * @expectedException \InvalidArgumentException
+     */
+    public function testMagicConvertingUsingNullValueShouldRaiseInvalidArgumentException()
+    {
+        $c2c = new Coord2Coord();
+        $c2c->magic(null);
+    }
+
+
+    /**
+     * @expectedException \InvalidArgumentException
+     */
+    public function testMagicConvertingUsingVoidValueShouldRaiseInvalidArgumentException()
+    {
+        $c2c = new Coord2Coord();
+        $c2c->magic('');
+    }
+
+
+
+    public function testMagicConvertingShouldSuccess()
+    {
+        $c2c = new Coord2Coord();
+
+        $this->assertEquals('A', $c2c->magic(1));
+        $this->assertEquals('Z', $c2c->magic(26));
+        $this->assertEquals('AA', $c2c->magic(27));
+        $this->assertEquals('BH', $c2c->magic(60));
+        $this->assertEquals('AEN', $c2c->magic(820));
+        $this->assertEquals('A', $c2c->magic('1'));
+        $this->assertEquals('Z', $c2c->magic('26'));
+        $this->assertEquals('AA', $c2c->magic('27'));
+        $this->assertEquals('BH', $c2c->magic('60'));
+        $this->assertEquals('AEN', $c2c->magic('820'));
+
+
+
+        $this->assertEquals(28, $c2c->magic('ab'));
+        $this->assertEquals(31, $c2c->magic('ae'));
+        $this->assertEquals(37, $c2c->magic('ak'));
+        $this->assertEquals(60, $c2c->magic('bh'));
+        $this->assertEquals(820, $c2c->magic('aen'));
+        $this->assertEquals(28, $c2c->magic('AB'));
+        $this->assertEquals(31, $c2c->magic('AE'));
+        $this->assertEquals(37, $c2c->magic('AK'));
+        $this->assertEquals(60, $c2c->magic('BH'));
+        $this->assertEquals(820, $c2c->magic('AEN'));
+        
+
+        $c2c = new Coord2Coord(true);
+
+        $this->assertEquals('A', $c2c->magic(0));
+        $this->assertEquals('Z', $c2c->magic(25));
+        $this->assertEquals('AA', $c2c->magic(26));
+        $this->assertEquals('BI', $c2c->magic(60));
+        $this->assertEquals('AEO', $c2c->magic(820));
+        $this->assertEquals('A', $c2c->magic('0'));
+        $this->assertEquals('Z', $c2c->magic('25'));
+        $this->assertEquals('AA', $c2c->magic('26'));
+        $this->assertEquals('BI', $c2c->magic('60'));
+        $this->assertEquals('AEO', $c2c->magic('820'));
+        $this->assertEquals(27, $c2c->l2d('ab'));
+        $this->assertEquals(30, $c2c->l2d('ae'));
+        $this->assertEquals(36, $c2c->l2d('ak'));
+        $this->assertEquals(59, $c2c->l2d('bh'));
+        $this->assertEquals(819, $c2c->l2d('aen'));
+        $this->assertEquals(27, $c2c->l2d('AB'));
+        $this->assertEquals(30, $c2c->l2d('AE'));
+        $this->assertEquals(36, $c2c->l2d('AK'));
+        $this->assertEquals(59, $c2c->l2d('BH'));
+        $this->assertEquals(819, $c2c->l2d('AEN'));
+    }
+
 }

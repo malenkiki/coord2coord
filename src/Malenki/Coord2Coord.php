@@ -211,5 +211,50 @@ class Coord2Coord
 
         return strtoupper($out);
     }
+
+
+
+
+
+
+
+    /**
+     * Converts numeric coordinate or letter coordinate column to spreadsheet
+     * column opposite coordinate system. 
+     * 
+     * Examples:
+     *
+     *     $c2c = new Coord2Coord();
+     *     $c2c->magic(1); // 'A'
+     *     $c2c->magic(2); // 'B'
+     *     $c2c->magic('A'); // 1
+     *     $c2c->magic('B'); // 2
+     *
+     *     $c2c = new Coord2Coord(true);
+     *     $c2c->magic(1); // 'B'
+     *     $c2c->magic(2); // 'C'
+     *     $c2c->magic('A'); // 0
+     *     $c2c->magic('B'); // 1
+     *
+     * @param integer|string $arg Index of the column to convert, as integer or letters
+     * @return string
+     * @throws \InvalidArgumentException If coordinate is not an integer or letters group
+     */
+    public function magic($arg)
+    {
+        if(!(is_integer($arg) || is_string($arg))){
+             throw new \InvalidArgumentException('Magic conversion works only for number or letters group!');
+        }
+
+        if(!preg_match('/^([a-z]+|[0-9]+)$/ui', $arg)){
+             throw new \InvalidArgumentException('Magic conversion works only for number or letters group!');
+        }
+
+        if(is_numeric($arg)){
+            return $this->d2l((int) $arg);
+        } else {
+            return $this->l2d($arg);
+        }
+    }
 }
 

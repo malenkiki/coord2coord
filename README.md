@@ -58,6 +58,16 @@ echo $c2c->d2l(25); // 'Z'
 echo $c2c->d2l(26); // 'AA'
 ```
 
+You can also magically convert integer to letters or the reverse:
+
+```php
+use \Malenki\Coord2Coord;
+
+$c2c = new Coord2Coord();
+echo $c2c->magic(1); // 'A'
+echo $c2c->magic('A'); // 1
+```
+
 That's all to know!
 
 But you must also know that if you use incorrect value for index (negative integer, non integer, or zero when starting point is one) then this raises an exception (`InvalidArgumentException` is it is not an integer or `OutOfRangeException` for other cases).
